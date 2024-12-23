@@ -19,19 +19,22 @@ function div(a,b) {
     return b!==0? a/b : "Division by 0 is not allowed";
 }
 function sin(a) {
-    return Math.sin(a);
+    return Math.sin(a*Math.PI/180).toFixed(2);
 }
 function cos(a) {
-    return Math.cos(a);
+    return Math.cos(a*Math.PI/180).toFixed(2);
+}
+function tan(a) {
+    return Math.tan(a*Math.PI/180).toFixed(2);
 }
 function cosec (a) {
-    return 1/Math.sin(a);    
+    return 1/Math.sin(a*Math.PI/180).toFixed(2);    
 }
 function cot(a) {
-    return 1/Math.tan(a);
+    return 1/Math.tan(a*Math.PI/180).toFixed(2);
 }
 function sec(a) {
-    return 1/Math.cos(a);
+    return 1/Math.cos(a*Math.PI/180).toFixed(2);
 }
 
 
@@ -47,45 +50,48 @@ console.log("\nYour Output Data:- \n---------------------");
 
 switch (command) {
     case 'add':
-        console.log('| ', add(num1,num2));        
+        console.warn('\n ', add(num1,num2));        
         break;
     case 'sub':
-        console.log('| ',sub(num1,num2));        
+        console.warn('\n ',sub(num1,num2));        
         break;
     case 'mult':
-        console.log('| ',mult(num1,num2));        
+        console.warn('\n ',mult(num1,num2));        
         break;
     case 'div':
-        console.log('| ',div(num1,num2));        
+        console.warn('\n ',div(num1,num2));        
         break;
     case 'sin':
-        console.log('| ',sin(num1));        
+        console.warn('\n ',sin(num1));        
         break;
     case 'cos':
-        console.log('| ',cos(num1));        
+        console.warn('\n ',cos(num1));        
+        break;
+    case 'tan':
+        console.warn('\n ',tan(num1));
         break;
     case 'cosec':
-        console.log('| ',cosec(num1));        
-        break;
-    case 'cot':
-        console.log('| ',cot(num1));        
+        console.warn('\n ',cosec(num1));        
         break;
     case 'sec':
-        console.log('| ',sec(num1));        
+        console.warn('\n ',sec(num1));        
+        break;
+    case 'cot':
+        console.warn('\n ',cot(num1));        
         break;
     case 'random':
         const length = parseInt(process.argv[3]);
-        console.log('| ',generateRandomDecimalNumber(length));
+        console.warn(` `,generateRandomDecimalNumber(length));
         break;
     
     default:
         console.error('Invalid command. Please provide a valid command as one of these below:-');
         console.warn(`node calculator.js options 10 20  (options:- add/sub/mult/div)`);
-        console.warn(`node calculator.js options 30  (options:- sin/cos/cosec/cot/sec)`);
+        console.warn(`node calculator.js options 30  (options:- sin/cos/tan/cosec/sec/cot)`);
         console.warn(`node calculator.js random 10  (to generate random number of length 10)`);
         break;
 }
 console.log('---------------------');
-console.warn("\n_______________________________End of the program______________________________________\n");
+console.warn("_______________________________End of the program______________________________________\n");
 
 
