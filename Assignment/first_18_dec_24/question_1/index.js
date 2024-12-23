@@ -1,5 +1,5 @@
 const sum = require("./sum");
-const multiply = require("./multiplication");
+const {multiplication, division} = require("./multiplication");
 
 // let sumA = 3;
 // let sumB = 5;
@@ -15,7 +15,10 @@ if(process.argv[2] === 'sum'){
     console.log(sum(Number(process.argv[3]),Number(process.argv[4])));    
 }
 else if(process.argv[2] === 'mul'){
-    console.log(multiply(Number(process.argv[3]),Number(process.argv[4]))); 
+    console.log(multiplication(Number(process.argv[3]),Number(process.argv[4]))); 
+}
+else if(process.argv[2] === 'div'){
+    console.log(division(Number(process.argv[3]),Number(process.argv[4]))); 
 }
 
 // run command in terminal :  node index.js sum 5 10  // OP- Sum is : 15 !
