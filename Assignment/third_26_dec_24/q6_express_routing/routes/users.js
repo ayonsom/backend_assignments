@@ -4,6 +4,8 @@ const fs = require('fs');
 
 // let users = [];
 let users = JSON.parse(fs.readFileSync('./data/users.json')); //[]
+// console.log(typeof users, Array.isArray(users));
+
 
 user_router.post('/', (req, res) => {
     const user = req.body;
@@ -15,27 +17,34 @@ user_router.post('/', (req, res) => {
 
 user_router.put('/:id', (req,res)=>{
     const id = req.params.id;
-    const updatedUser = {id, ...req.body};
+    let updatedUser = { ...req.body};
+    // console.log('updatedUser :',updatedUser);
+    
     users.map(user=>{
-        if(user.id == id){
-            user = updatedUser;
+        // console.log('user :', user);
+        
+        if(user.id == id){           
+            // user = {...updatedUser};
+            user.id = updatedUser.id || user.id;
+            user.name = updatedUser.name || user.name;
+            user.age = updatedUser.age || user.age;;
+            user.role = updatedUser.role || user.role;
+            console.log('user :', user);
+            updatedUser = user;
         }
     });
-    fs.writeFileSync('./data/users.json', JSON.stringify(users));
+    console.log('users :',users);
+    
+    fs.writeFile('./data/users.json', JSON.stringify(users), (err)=>{
+        if(err){
+            console.log('Error:',err);
+        }
+    });
     res.status(200).send(`User with ID:${id} has been updated:\n${JSON.stringify(updatedUser)}`);
 });
 
 user_router.delete('/:id', (req, res)=>{
     const id = req.params.id;
-    // const new_user = users.filter(user => user.id !== id);
-    // const new_user = [];
-    // for(let i=0 ; i<users.length ; i++){
-    //     if(Number(users[i].id) !== Number(id)){
-    //         // console.log('users[i] :',users[i]);            
-    //         new_user.push(users[i]);
-    //     }
-    // }
-    // console.log('new_user :',new_user);
     const new_users = users.filter(user => Number(user.id) !== Number(id));
     fs.writeFileSync('./data/users.json', JSON.stringify(new_users));
     res.status(201).send(`The user with id ${id} deleted successfully.`);
