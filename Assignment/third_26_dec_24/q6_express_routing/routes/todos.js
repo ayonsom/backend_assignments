@@ -22,7 +22,7 @@ router.put('/:id', (req,res)=>{
             updatedTodo = todo;
         }
     });
-    console.log('todos :',todos);
+    // console.log('todos :',todos);
     
     fs.writeFileSync('./data/todos.json', JSON.stringify(todos));
     res.status(200).send(`Todo with ID:${id} has been updated:\n${JSON.stringify(updatedTodo)}`);
