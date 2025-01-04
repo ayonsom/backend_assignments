@@ -29,11 +29,11 @@ user_router.put('/:id', (req,res)=>{
             user.name = updatedUser.name || user.name;
             user.age = updatedUser.age || user.age;;
             user.role = updatedUser.role || user.role;
-            console.log('user :', user);
+            // console.log('user :', user);
             updatedUser = user;
         }
     });
-    console.log('users :',users);
+    // console.log('users :',users);
     
     fs.writeFile('./data/users.json', JSON.stringify(users), (err)=>{
         if(err){
