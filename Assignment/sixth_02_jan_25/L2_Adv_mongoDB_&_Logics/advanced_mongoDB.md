@@ -1,109 +1,60 @@
-1. Dynamic Course Filtering and Sorting
-Filtering by Instructor Name, Duration, and Capacity
-
-app.get("/courses/filter", async (req, res) => {
-  const { instructor, duration, maxCapacity } = req.query;
-  const filter = {};
-
-  if (instructor) filter.instructor = instructor;
-  if (duration) filter.duration = duration;
-  if (maxCapacity) filter.maxCapacity = { $lte: maxCapacity };
-
-  try {
-    const courses = await CourseModel.find(filter).sort({ createdAt: -1 });
-    res.send(courses);
-  } catch (error) {
-    res.status(500).send({ msg: "Failed to retrieve courses", error });
-  }
-});
-
-
-2. Simulating Enrollment Logic in MongoDB
-Add a Field for Enrolled Course IDs in the Users Collection
-Update your user schema to include an enrolledCourses field:
-
-const userSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
-  role: {
-    type: String,
-    enum: ['admin', 'instructor', 'student'],
-  },
-  enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
-});
-
-
-Simulate a Student Enrolling in a Course
-
-app.post("/users/enroll", async (req, res) => {
-  const { userId, courseId } = req.body;
-
-  try {
-    const user = await UserModel.findById(userId);
-    if (!user) {
-      return res.status(404).send("User not found.");
-    }
-    if (user.role !== "student") {
-      return res.status(403).send("Only students can enroll in courses.");
-    }
-    if (user.enrolledCourses.includes(courseId)) {
-      return res.status(409).send("User is already enrolled in this course.");
-    }
-
-    user.enrolledCourses.push(courseId);
-    await user.save();
-    res.send({ msg: "Enrollment successful", user });
-  } catch (error) {
-    res.status(500).send({ msg: "Enrollment failed", error });
-  }
-});
-
-
-
-Check if a User is Already Enrolled in a Course
-This is handled in the enrollment logic above with the check:
-
-if (user.enrolledCourses.includes(courseId)) {
-  return res.status(409).send("User is already enrolled in this course.");
+// Users Collection Structure
+{
+  "_id": ObjectId,
+  "username": String,
+  "email": String,
+  "password": String,
+  "role": String // Example roles: student, instructor, admin
 }
 
-
-
-3. Database Consistency
-Prevent Deleting Courses with Enrolled Students
-
-app.delete("/courses/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const studentsEnrolled = await UserModel.find({ enrolledCourses: id }).countDocuments();
-    if (studentsEnrolled > 0) {
-      return res.status(400).send("Course cannot be deleted as it has enrolled students.");
-    }
-
-    const deletedCourse = await CourseModel.findByIdAndDelete(id);
-    if (!deletedCourse) {
-      return res.status(404).send("Course not found.");
-    }
-    res.send({ msg: "Course deleted successfully", course: deletedCourse });
-  } catch (error) {
-    res.status(500).send({ msg: "Failed to delete course", error });
-  }
-});
-
-
-
-Ensure Each Course Enrollment is Unique Per Student
-This is ensured with the enrollment logic in the POST /users/enroll endpoint.
-
-User Roles Validation
-Validation to ensure only students can be enrolled in courses is handled in the enrollment logic:
-
-
-if (user.role !== "student") {
-  return res.status(403).send("Only students can enroll in courses.");
+// Courses Collection Structure
+{
+  "_id": ObjectId,
+  "title": String,
+  "description": String,
+  "instructor": ObjectId, // Reference to the Users collection
+  "students": [ObjectId] // Array of user IDs (students)
 }
 
+// Insert a New User
+db.users.insertOne({
+  "username": "john_doe",
+  "email": "john@example.com",
+  "password": "hashed_password",
+  "role": "student"
+});
 
+// Insert a New Course
+db.courses.insertOne({
+  "title": "Introduction to MongoDB",
+  "description": "Learn the basics of MongoDB",
+  "instructor": ObjectId("instructor_id"),
+  "students": [ObjectId("student_id1"), ObjectId("student_id2")]
+});
 
+// Read All Users
+db.users.find();
+
+// Update a User's Email
+db.users.updateOne(
+  { "_id": ObjectId("user_id") },
+  { $set: { "email": "new_email@example.com" } }
+);
+
+// Delete a Course
+db.courses.deleteOne({ "_id": ObjectId("course_id") });
+
+// Find All Students Enrolled in a Specific Course
+db.courses.find(
+  { "title": "Introduction to MongoDB" },
+  { "students": 1, "_id": 0 }
+);
+
+// Sort Users by Username
+db.users.find().sort({ "username": 1 });
+
+// Ensure Unique Email for Users
+db.users.createIndex({ "email": 1 }, { unique: true });
+
+// Ensure No Duplicate Course Titles
+db.courses.createIndex({ "title": 1 }, { unique: true });
