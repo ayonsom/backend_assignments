@@ -10,8 +10,10 @@ const userSchema = new mongoose.Schema({
     email : {type : String,  required : true, match : [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ , "email must be of valid format Ex- abcdxxx@example.com"]},
     phone : {type: String, minLength : 10, maxLength : 10 , required : true, unique : true},
     age : { type:Number, min:18, max:65}
+},{
+    versionKey : false
 })
 
-const UserModel = ('users', userSchema)
+const UserModel = mongoose.model('User', userSchema)
 
 module.exports = {UserModel}
