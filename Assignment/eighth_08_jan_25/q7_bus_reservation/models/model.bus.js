@@ -25,6 +25,8 @@ const busSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "Reservation"
     }]
+},{
+    versionKey : false
 })
 
 const busModel = mongoose.model("Bus", busSchema);

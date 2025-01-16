@@ -18,6 +18,8 @@ const routeSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "Bus"
     }]
+},{
+    versionKey : false
 })
 
 const routeModel = mongoose.model("Route", routeSchema);

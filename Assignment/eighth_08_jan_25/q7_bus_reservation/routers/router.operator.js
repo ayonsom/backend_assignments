@@ -31,15 +31,17 @@ operatorRouter.post('/', async (req,res) => {
 operatorRouter.patch('/', async (req,res) => {
     let data = req.body;
     try {
-        const Operator = await operatorModel.findOne( data.name || data._id )
-        await operatorModel.findOneAndUpdate( (data.name || data._id), {
-            name : data.name || existingOperator.name,
-            contact_info : data.contact_info || existingOperator.contact_info,
-            buses : [...existingOperator.buses, ...data.buses] || existingOperator.buses
+        const existingOperator = await operatorModel.findOne( data._id ?{_id:data._id} : {name:data.name} )
+        console.log(existingOperator);        
+        await operatorModel.findOneAndUpdate( (data._id ?{_id:data._id} : {name:data.name}), { 
+            name : data.name? data.name : existingOperator.name,
+            contact_info : data.contact_info? data.contact_info : existingOperator.contact_info,
+            buses : data.buses?[...existingOperator.buses, ...data.buses] : existingOperator.buses
         });
-        const updatedOperator = await operatorModel.findOne( data.name || data._id )
-        res.status(204).send({msg:"Operator updated successfully:", oldData : Operator, newData : updatedOperator})
+        const updatedOperator = await operatorModel.findOne(data._id ?{_id:data._id} : {name:data.name})
+        res.status(200).send({msg:"Operator updated successfully:", oldData : existingOperator, newData : updatedOperator})
     } catch (error) {
+        console.log(error);        
         res.send(error)
     }
 })

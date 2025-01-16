@@ -25,6 +25,8 @@ const passengerSchema = new mongoose.Schema({
             ref : 'Reservation'
         }
     }]
+},{
+    versionKey : false
 })
 
 const passengerModel = mongoose.model("Passenger", passengerSchema);

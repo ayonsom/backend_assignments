@@ -1,4 +1,4 @@
-const routeRouter = require('mongoose').Router()
+const routeRouter = require('express').Router()
 const {routeModel} = require('../models/model.routes')
 
 routeRouter.get('/', async (req,res) => {

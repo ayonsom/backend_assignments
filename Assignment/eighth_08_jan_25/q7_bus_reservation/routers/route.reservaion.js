@@ -1,4 +1,4 @@
-const reservationRouter = require('mongoose').Router()
+const reservationRouter = require('express').Router()
 const { reservartionModel } = require('../models/model.reservation')
 
 reservationRouter.get('/', async (req,res) => {

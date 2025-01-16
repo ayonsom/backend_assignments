@@ -16,6 +16,8 @@ const operatorSchema = new mongoose.Schema({
             ref : "Bus"
         }
     ]
+},{
+    versionKey : false
 })
 
 const operatorModel = mongoose.model("Operator", operatorSchema);

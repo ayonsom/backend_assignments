@@ -19,6 +19,8 @@ const reservationSchema = new mongoose.Schema({
         type : Date,
         default : Date.now
     }
+},{
+    versionKey : false
 })
 
 const reservartionModel = mongoose.model("Reservation", reservationSchema);
