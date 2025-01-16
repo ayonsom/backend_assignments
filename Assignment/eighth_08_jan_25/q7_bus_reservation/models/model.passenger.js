@@ -19,12 +19,12 @@ const passengerSchema = new mongoose.Schema({
         minLength : 10,
         maxLength : 10
     },
-    reservations : {
-        type : [{
+    reservations : [{
+        type : {
             type : mongoose.Schema.Types.ObjectId,
             ref : 'Reservation'
-        }]
-    }
+        }
+    }]
 })
 
 const passengerModel = mongoose.model("Passenger", passengerSchema);
