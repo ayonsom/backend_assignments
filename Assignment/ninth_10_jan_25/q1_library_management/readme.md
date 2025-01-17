@@ -1,8 +1,7 @@
 Q: 1
 Mongoose & Relationship
 Online Library System
-Submission Instructions:
-Please submit the Masai Repo Link.
+
 
 Description:
 You are tasked with building an Online Library System using Mongoose and MongoDB. The system will manage books, authors, users, and borrowing transactions. It should enable users to borrow books, return them, and view their borrowing history. The system should include the relationships between books and authors, and users and transactions.
