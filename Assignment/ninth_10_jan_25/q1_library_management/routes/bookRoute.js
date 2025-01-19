@@ -15,8 +15,6 @@ bookRoute.get("/",async(req,res)=>{
     }
 })
 
-
-
 //post
  bookRoute.post("/",async(req,res)=>{
  try {

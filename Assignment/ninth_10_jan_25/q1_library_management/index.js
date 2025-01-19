@@ -5,7 +5,7 @@ const { authorRoute } = require("./routes/authorRoute")
 const { bookRoute } = require("./routes/bookRoute")
 const app=express()
 
-// middlewares 
+// routing middlewares 
 app.use(express.json())
 app.use("/users",userRoute)
 app.use("/authors", authorRoute)
