@@ -14,8 +14,8 @@ authorRoute.get('/', async (req,res) => {
 // find author by ObjectId and his blog posts
 authorRoute.get('/:id', async (req,res) => {
     try {
-        const author = await AuthorModel.findOne({_id : req.params.id});
-        res.status(200).send({msg:"Here is the author :", data:author})
+        const author = await AuthorModel.findOne({_id : req.params.id}).populate("BlogPosts");
+        res.status(200).send({msg:"Here is the author & his all Posts:", data:author})
     } catch (error) {
         res.send(error)
     }

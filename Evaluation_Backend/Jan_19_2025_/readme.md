@@ -15,5 +15,11 @@
 
 7. Available Routes & Their functionalities (use ThunderClient or Postman):-
 
-    a. http://localhost:3000/ --> Shows some welcome message & Routes
-    b. 
+    a. method : GET  http://localhost:3000/ --> Shows some welcome message & Routes
+    b. method : GET  http://localhost:3000/author --> Provides a list of all Authors in the DB
+    c. method : GET  http://localhost:3000/author/:id --> Search an author by his document _id and all his posts
+    d. method : POST  http://localhost:3000/author/add_author --> Add a new author by providing name & unique email in JSON format
+    e. method : PATCH  http://localhost:3000/author/:id --> update author details
+    f. method : DELETE  http://localhost:3000/author/:id --> delete author details
+
+    g. 

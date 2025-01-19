@@ -5,14 +5,14 @@ const AuthorSchema = new mongoose.Schema({
     email : {type:String, required:true, unique:true}
 },{
     versionKey:false,
-    // toJSON : { virtuals:true}
+    toJSON : { virtuals:true}
 })
 
-// AuthorModel.virtual('BlogPosts',{
-//     ref : 'BlogPosts',
-//     localField : '_id',
-//     foreignField : 'author'
-// })
+AuthorSchema.virtual('BlogPosts',{
+    ref : 'BlogPost',
+    localField : '_id',
+    foreignField : 'author'
+})
 
 //.populate('BlogPosts') in router
 
