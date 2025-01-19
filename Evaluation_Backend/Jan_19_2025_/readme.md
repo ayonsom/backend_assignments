@@ -22,4 +22,10 @@
     e. method : PATCH  http://localhost:3000/author/:id --> update author details
     f. method : DELETE  http://localhost:3000/author/:id --> delete author details
 
-    g. 
+    g. method : GET  http://localhost:3000/blogposts --> Shows all blogs
+    h. method : GET  http://localhost:3000/blogposts/:id --> Shows requested blog only
+    i. method : GET  http://localhost:3000/blogposts/author/:author_id --> Shows requested blog only by specific author only
+
+    j. method : POST  http://localhost:3000/blogposts/new_post --> Create anew post
+    k. method : Patch  http://localhost:3000/blogposts/:_id --> update a new post
+    l. method : DELETE  http://localhost:3000/blogposts/:_id --> delete a new post
